@@ -12,7 +12,6 @@ app.service("appService",function($http){
 
 		var urlPath = "data/sampleData.json"; //comment this out and uncomment below line.
 
-		//var urlPath = "http://usawsclxd00039.nix.us.kworld.kpmg.com:9200/sewp/proposal/16";
 
 		self.agency_id = agencyId == '' ? undefined:agencyId;
 
