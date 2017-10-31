@@ -8,19 +8,21 @@
 
 
 
-<title>Angular Project</title>
+<title>NASA SEWP</title>
 
 
  <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/ui-darkness/jquery-ui.css"/>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css">
+    
+    
+    
  	 <link rel="stylesheet" href="http://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
    
     
 	 <!-- Google fonts -->
-    <link href="http://fonts.googleapis.com/css?family=Lato:300,700,300italic" rel="stylesheet" type="text/css">
 
     <!-- Styles -->
-    <link href="http://lukaszwatroba.github.io/valitycss/dist/vality.min.css" rel="stylesheet">
     <!-- <link rel="stylesheet" href="./bower/valitycss/dist/vality.css"> -->
 	    
 
@@ -34,22 +36,13 @@
 </head>
 <body>
 	
-	<nav class="navbar navbar-inverse navbar-fixed-top">
-    <div class="container">
-        <div class="navbar-header">
-            
-        </div>
-    </div>
-</nav>
-
-
 	<div class="container">
     <div class="page-header"> 
-        <h1>Angular App Demo</h1> 
+        <h3>NASA SEWP Proposals</h3> 
     </div>
     
     
-    <div ng-controller="appCtrl as ctrl"  ng-init="ctrl.init()">
+    <div ng-controller="appCtrl as ctrl">
     
 	 <div class="form-group">
 		  <label for="request_id">Request ID:</label>
@@ -68,25 +61,46 @@
 	<br/>
 	<br/>
 	
-		
-	<table class="table table-bordered" ng-repeat="elementOfJsonData in ctrl.jsonData"> <!-- This will loop through the  -->
-	 <caption> Table of Element {{$index+1}}</caption>
+	
+		 
+	<table class="table table-bordered" style="width:2000px;"> <!-- This will loop through the  -->
+	 
 	  <thead class="thead-default">
 	    <tr>
-	      <th width="40%">Type</th>
-	      <th width="60%">Value</th>
+	    
+	    
+	      <th class="col-lg-1"   ng-repeat="(key,data) in ctrl.jsonData[0]">
 	      
-	    </tr>
+	       <a href="#" ng-click="ctrl.sortType = key; ctrl.sortReverse = !ctrl.sortReverse">
+             {{key}}
+            <span ng-show="ctrl.sortType == key && !ctrl.sortReverse" class="fa fa-caret-down"></span>
+            <span ng-show="ctrl.sortType == key && ctrl.sortReverse" class="fa fa-caret-up"></span>
+          </a>
+	     
+	      
+	      
+	      </th>	      
+	    </tr> 
 	  </thead>
+	  
 	  <tbody>
-		<tr  ng-repeat="(key, data) in elementOfJsonData"> <!-- This will loop through the dynamic tableElement data -->
-			<td>{{key}}</td>
-			<td>{{data}}</td>
+		<tr  ng-repeat="elementOfJsonData in ctrl.jsonData | orderBy:ctrl.sortType:ctrl.sortReverse "> <!-- This will loop through the dynamic tableElement data -->
+			<td ng-repeat="(key,data)  in elementOfJsonData">
+			
+			   <span ng-if="key == 'Request_ID'"><a target="_new" href="{{data}}.html">{{data}}</a></span>
+					
+				<span ng-if="key != 'Request_ID'">{{data}}</span>
+			   
+			  
+		
+			
+			
+			</td>
 		</tr>
 	
 	 </tbody>
 	</table>
-	
+  		
 	</div>
 	
 	
